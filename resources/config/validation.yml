@@ -1,0 +1,46 @@
+ErsteNews\Api\Model\CredentialMsg:
+    properties:
+        login:
+            - NotBlank: ~
+        password:
+            - NotBlank: ~
+            - Length:
+                min: 8
+                max: 15
+
+ErsteNews\Api\Model\UserMsg:
+    properties:
+        login:
+            - NotBlank: ~
+        password:
+            - NotBlank: ~
+            - Length:
+                min: 8
+                max: 15
+        name:
+            - Length:
+                max: 127
+        country:
+            - Length:
+                max: 31
+        city:
+            - Length:
+                max: 31
+        email:
+            - Length:
+                max: 31
+        phone:
+            - Length:
+                max: 31
+        email:
+            - Length:
+                max: 31
+        office:
+            - Length:
+                max: 31
+        extra1:
+            - Length:
+                max: 31
+        extra2:
+            - Length:
+                max: 31

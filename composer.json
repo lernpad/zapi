@@ -1,0 +1,20 @@
+{
+    "name":"lernpad/zapi",
+    "type": "symfony-bundle",
+    "description": "ZApi for some hidden project",
+    "homepage": "https://github.com/lernpad/zapi",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrey Chernov",
+            "email": "lernpad@mail.ru"
+        }
+    ],
+    "autoload": {
+	"psr-4": { "Lernpad\\ZApiBundle\\": "" }
+    },
+    "require": {
+        "symfony/validator": "^3.4",
+        "symfony/yaml": "^3.4"
+    }
+}

@@ -21,6 +21,7 @@ Step 2: Getting Started
     use Lernpad\ZApi\Model\StatusMsg;
     use Lernpad\ZApi\Model\UserMsg;
     use Lernpad\ZApi\Model\EventMsg;
+    use Symfony\Component\Validator\Exception\ValidatorException;
 
     $authUser = new UserMsg();
     $authUser->setLogin(2);
@@ -38,8 +39,14 @@ Step 2: Getting Started
     $newUser->setName('Ivan Urgant');
     $newUser->setEnabled(true);
 
-    $status = $cp->userCreate($newUser);
-    echo "new user status(".$status.",".StatusMsg::getName($status).")\n";
+    try {
+        $status = $cp->userCreate($newUser);
+        echo "new user status(".$status.",".StatusMsg::getName($status).")\n";
+    } catch (\ZMQSocketException $e) {
+        // ...
+    } catch (ValidatorException $e) {
+        // ...
+    }
 
 Check if User exists
 

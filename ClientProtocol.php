@@ -2,15 +2,20 @@
 
 namespace Lernpad\ZApi;
 
-use Lernpad\ZApi\Status;
-use Lernpad\ZApi\Method;
+use Lernpad\ZApi\Model\StatusMsg;
+use Lernpad\ZApi\Model\MethodMsg;
 use Lernpad\ZApi\Model\CredentialMsg;
 use Lernpad\ZApi\Model\UserMsg;
+use Lernpad\ZApi\Model\EventMsg;
+use Lernpad\ZApi\Model\NumberMsg;
+use Lernpad\ZApi\Socket;
+use Symfony\Component\Validator\Exception\ValidatorException;
 
 class ClientProtocol
 {
 
-    private $dsn;
+    private $host;
+    private $port;
     private $pw;
 
     /**
@@ -22,7 +27,9 @@ class ClientProtocol
      */
     public function connect($host, $port, UserMsg &$authUser)
     {
-        $this->dsn = "tcp://" . $host . ":" . $port;
+        $this->host = $host;
+        $this->port = $port;
+        //---
         $cred = new CredentialMsg();
         $cred->setLogin($authUser->getLogin())->setPassword($authUser->getPassword());
         $this->pw = $cred;
@@ -30,41 +37,153 @@ class ClientProtocol
 
     public function userCreate(UserMsg $user)
     {
-	return $this->doUser($user, Method::UserCreate);
+        return $this->doUser($user, MethodMsg::UserCreate);
     }
 
     /**
-     * @throws ZMQSocketException
+     * @throws \ZMQSocketException
+     * @throws ValidatorException
      */
     private function doUser(UserMsg $user, $cmd)
     {
         //--- проверки
-        $this->pw->isValid();
-        $user->isValid();
-
-	//---
-	$rc = Status::statusError;	//--- код ошибки
-
-	//---
-	$context = new \ZMQContext();
-        $socket = $context->getSocket(\ZMQ::SOCKET_REQ);
-        // Получить список подключённых конечных точек
-        $endpoints = $socket->getEndpoints();
-        // Проверить, подключён ли сокет
-        if (!in_array($this->dsn, $endpoints['connect'])) {
-            $socket->connect($this->dsn);
+        if (!$this->pw->isValid() || !$user->isValid()) {
+            return(StatusMsg::statusError);
         }
 
-        $socket->send(pack("C", $cmd), \ZMQ::MODE_SNDMORE);
-        $socket->send($this->pw->pack(), \ZMQ::MODE_SNDMORE);
-        $socket->send($user->pack());
+        $socket = new Socket(\ZMQ::SOCKET_REQ);
+        $socket->connect($this->host, $this->port);
+        $socket->sendMsg(new MethodMsg($cmd), \ZMQ::MODE_SNDMORE);
+        $socket->sendMsg($this->pw, \ZMQ::MODE_SNDMORE);
+        $socket->sendMsg($user);
 
-        $code = $socket->recv();
-        $unpacked = unpack("C", $code);
-        $rc = $unpacked[1];
-        $socket->disconnect($this->dsn);
-	//---
-	return($rc);
+        /* @var $status StatusMsg */
+        $status = $socket->recvMsg(StatusMsg::class);
+        //---
+        return($status->getCode());
     }
+
+    /**
+     * @throws \ZMQSocketException
+     * @throws ValidatorException
+     */
+    public function eventsGet()
+    {
+        //--- проверки
+        if (!$this->pw->isValid()) {
+            return(StatusMsg::statusError);
+        }
+
+        $socket = new Socket(\ZMQ::SOCKET_REQ);
+        $socket->connect($this->host, $this->port);
+        $socket->sendMsg(new MethodMsg(MethodMsg::EventsGetCalendar), \ZMQ::MODE_SNDMORE);
+        $socket->sendMsg($this->pw);
+
+        /* @var $status StatusMsg */
+        $status = $socket->recvMsg(StatusMsg::class);
+        if ($status->getCode() != StatusMsg::statusOk) {
+            return($status->getStatus());
+        }
+
+        /* @var $count NumberMsg */
+        $count = $socket->recvMsg(NumberMsg::class);
+
+        $events = [];
+
+        for ($i = 0; $i < $count->getNumber(); ++$i) {
+            /* @var $event EventMsg */
+            $event = $socket->recvMsg(EventMsg::class);
+            if ($event->isValid()) {
+                $events[] = $event;
+            }
+        }
+
+        /* @var $count NumberMsg */
+        $socket->recvMsg(NumberMsg::class);
+        //---
+        return($events);
+    }
+
+    /**
+     * @throws \ZMQSocketException
+     * @throws ValidatorException
+     */
+    public function userPassword($login, $newPassword)
+    {
+
+        $userPw = new CredentialMsg();
+        $userPw->setLogin($login);
+        $userPw->setPassword($newPassword);
+
+        //--- проверки
+        if (!$userPw->isValid()) {
+            return(StatusMsg::statusError);
+        }
+
+        $socket = new Socket(\ZMQ::SOCKET_REQ);
+        $socket->connect($this->host, $this->port);
+
+        $socket->sendMsg(new MethodMsg(MethodMsg::UserPassword), \ZMQ::MODE_SNDMORE);
+        $socket->sendMsg($this->pw, \ZMQ::MODE_SNDMORE);
+        $socket->sendMsg($userPw);
+
+        /* @var $status StatusMsg */
+        $status = $socket->recvMsg(StatusMsg::class);
+        return($status->getCode());
+    }
+
+    /**
+     *
+     * @throws \ZMQSocketException
+     * @throws ValidatorException
+     *
+     * @param int $login
+     */
+    public function userGet($login)
+    {
+        $socket = new Socket(\ZMQ::SOCKET_REQ);
+        $socket->connect($this->host, $this->port);
+
+        $socket->sendMsg(new MethodMsg(MethodMsg::UserGet), \ZMQ::MODE_SNDMORE);
+        $socket->sendMsg($this->pw, \ZMQ::MODE_SNDMORE);
+        $message = new NumberMsg();
+        $message->setNumber($login);
+        $socket->sendMsg($message);
+
+        /* @var $status StatusMsg */
+        $status = $socket->recvMsg(StatusMsg::class);
+        return($status->getCode());
+    }
+
+    /**
+     *
+     * @throws \ZMQSocketException
+     * @throws ValidatorException
+     *
+     * @param int $login
+     * @param \DateTime $valid_till
+     */
+    public function userService($login, \DateTime $valid_till)
+    {
+        $socket = new Socket(\ZMQ::SOCKET_REQ);
+        $socket->connect($this->host, $this->port);
+
+        $socket->sendMsg(new MethodMsg(MethodMsg::UserService), \ZMQ::MODE_SNDMORE);
+        $socket->sendMsg($this->pw, \ZMQ::MODE_SNDMORE);
+
+        $loginMsg = new NumberMsg();
+        $loginMsg->setNumber($login);
+        $socket->sendMsg($loginMsg, \ZMQ::MODE_SNDMORE);
+
+        $timestampMsg = new NumberMsg();
+        $timestampMsg->setNumber($valid_till->getTimestamp());
+        $socket->sendMsg($timestampMsg);
+
+        /* @var $status StatusMsg */
+        $status = $socket->recvMsg(StatusMsg::class);
+        return($status->getCode());
+    }
+
 }
+
 ?>

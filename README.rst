@@ -62,7 +62,7 @@ Change User password
 
 .. code-block:: php
 
-    $status = $cp->userPassword($newLogin, "foobar");
+    $status = $cp->userPassword($login, "foobar");
     echo "password status(".$status.",".StatusMsg::getName($status).")\n";
 
 Change User service

@@ -69,5 +69,5 @@ Change User service
 
 .. code-block:: php
 
-    $status = $cp->userService($newLogin, new \DateTime('+3 month'));
+    $status = $cp->userService($login, new \DateTime('+3 month'));
     echo "service status(".$status.",".StatusMsg::getName($status).")\n";

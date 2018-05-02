@@ -1,4 +1,4 @@
-ErsteNews\Api\Model\CredentialMsg:
+Lernpad\ZApi\Model\CredentialMsg:
     properties:
         login:
             - NotBlank: ~
@@ -8,7 +8,7 @@ ErsteNews\Api\Model\CredentialMsg:
                 min: 8
                 max: 15
 
-ErsteNews\Api\Model\UserMsg:
+Lernpad\ZApi\Model\UserMsg:
     properties:
         login:
             - NotBlank: ~

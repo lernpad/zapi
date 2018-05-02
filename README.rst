@@ -42,12 +42,14 @@ Step 2: Getting Started
     echo "new user status(".$status.",".StatusMsg::getName($status).")\n";
 
 Check if User exists
+
 .. code-block:: php
 
     $status = $cp->userGet($newLogin);
     echo "get user status(".$status.",".StatusMsg::getName($status).")\n";
 
 Try to get EventCalendar
+
 .. code-block:: php
 
     $events = $cp->eventsGet();
@@ -57,12 +59,14 @@ Try to get EventCalendar
     }
 
 Change User password
+
 .. code-block:: php
 
     $status = $cp->userPassword($newLogin, "foobar");
     echo "password status(".$status.",".StatusMsg::getName($status).")\n";
 
 Change User service
+
 .. code-block:: php
 
     $status = $cp->userService($newLogin, new \DateTime('+3 month'));

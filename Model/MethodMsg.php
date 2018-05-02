@@ -42,7 +42,7 @@ class MethodMsg extends CodeMsg
     public function setCode($code)
     {
         if (!in_array($code, $this->getAvailableMethods())) {
-            throw new \InvalidArgumentExceptionxception();
+            throw new \InvalidArgumentException();
         }
 
         return parent::setCode($code);

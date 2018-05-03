@@ -12,7 +12,6 @@ class StatusMsg extends CodeMsg
     const  	statusLoginInvalid      = 4;
     const  	statusLoginDisabled     = 5;
     const 	statusAccessDenied      = 6;
-    const       statusUserExists        = 7;
 
     static private $statuses = [
         self::statusOk => 'OK',
@@ -21,8 +20,7 @@ class StatusMsg extends CodeMsg
         self::statusFatal => 'Fatal Error',
         self::statusLoginInvalid => 'Login Invalid',
         self::statusLoginDisabled => 'Login Disabled',
-        self::statusAccessDenied => 'Access Denied',
-        self::statusUserExists => 'User Already Exists'
+        self::statusAccessDenied => 'Access Denied'
     ];
 
     public function __construct()

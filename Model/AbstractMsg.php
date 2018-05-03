@@ -41,7 +41,7 @@ abstract class AbstractMsg implements PackableInterface
     }
 
     /**
-     *
+     * @throws ValidatorException
      */
     public function validate()
     {

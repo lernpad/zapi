@@ -274,7 +274,30 @@ class UserMsg extends AbstractMsg
 
     public function unpack($bytes)
     {
-
+        $data = unpack('ilogin/igroup/a16password/ienabled/a128name'
+                . '/a32country/a32city/a32phone/a32email/a32office'
+                . '/a32extra1/a32extra2/ilast_ip/iconnected_at/ipaid_at'
+                . '/ivalid_till/icreated_at/iupdated_at', $bytes);
+        //
+        $this->setLogin($data['login']);
+        $this->setGroup($data['group']);
+        $this->setPassword($data['password']);
+        $this->setEnabled($data['enabled']);
+        $this->setName($data['name']);
+        $this->setCountry($data['country']);
+        $this->setCity($data['city']);
+        $this->setPhone($data['phone']);
+        $this->setEmail($data['email']);
+        $this->setOffice($data['office']);
+        $this->setExtra1($data['extra1']);
+        $this->setExtra2($data['extra2']);
+        $this->setLastIp($data['last_ip']);
+        $this->setConnectedAt($data['connected_at']);
+        $this->setPaidAt($data['paid_at']);
+        $this->setValidTill($data['valid_till']);
+        //---
+        $this->created_at = $data['created_at'];
+        $this->updated_at = $data['updated_at'];
     }
 }
 

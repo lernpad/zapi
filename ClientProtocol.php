@@ -145,7 +145,7 @@ class ClientProtocol
      *
      * @param int $login
      */
-    public function userGet($login)
+    public function userGet($login, UserMsg& $user)
     {
         $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
         $socket->connect($this->host, $this->port);
@@ -158,6 +158,8 @@ class ClientProtocol
 
         /* @var $status StatusMsg */
         $status = $socket->recvMsg(StatusMsg::class);
+        /* @var $tmp UserMsg */
+        $user = $socket->recvMsg(UserMsg::class);
         return($status->getCode());
     }
 

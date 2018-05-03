@@ -3,6 +3,7 @@
 namespace Lernpad\ZApi;
 
 use Lernpad\ZApi\Model\AbstractMsg;
+use Lernpad\ZApi\Exception\TimeoutException;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
 class Socket
@@ -10,10 +11,15 @@ class Socket
 
     private $dsn;
     private $raw;
+    private $timeout;
 
-    public function __construct($type, $timeout = 0, $name = 0)
+    public function __construct($type, $timeout)
     {
+        $this->timeout = $timeout;
         $this->raw = new \ZMQSocket(new \ZMQContext(), $type);
+        if ($timeout) {
+            $this->setLinger(0);
+        }
     }
 
     public function connect($host, $port)
@@ -35,31 +41,42 @@ class Socket
         $this->raw->disconnect($this->dsn);
     }
 
-    public function setLinger()
+    public function setLinger($linger = 0)
     {
-
+        $this->raw->setSockOpt(\ZMQ::SOCKOPT_LINGER, $linger);
     }
 
     /**
      * @throws ValidatorException
-     * @todo Timeout
+     * @throws \ZMQSocketException
+     * @throws TimeoutException
      */
     public function recvMsg($class)
     {
-        if (is_subclass_of($class, AbstractMsg::class)) {
-            $bytes = $this->raw->recv();
-            /* @var $message AbstractMsg */
-            $message = new $class;
-            $message->unpack($bytes);
-            $message->validate();
-            return $message;
+        $read = $write = [];
+        $poll = new \ZMQPoll();
+        $poll->add($this->raw, \ZMQ::POLL_IN);
+        $events = $poll->poll($read, $write, $this->timeout);
+
+        if ($events > 0) {
+            if (is_subclass_of($class, AbstractMsg::class)) {
+                $bytes = $this->raw->recv();
+                /* @var $message AbstractMsg */
+                $message = new $class;
+                $message->unpack($bytes);
+                $message->validate();
+                return $message;
+            } else {
+                throw new \InvalidArgumentException();
+            }
         } else {
-            throw new \InvalidArgumentException();
+            throw new TimeoutException();
         }
     }
 
     /**
      * @throws ValidatorException
+     * @throws \ZMQSocketException
      */
     public function sendMsg(AbstractMsg $message, $mode = 0)
     {

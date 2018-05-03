@@ -18,6 +18,7 @@ Step 2: Getting Started
     require __DIR__.'/vendor/autoload.php';
 
     use Lernpad\ZApi\ClientProtocol;
+    use Lernpad\ZApi\Exception\TimeoutException;
     use Lernpad\ZApi\Model\StatusMsg;
     use Lernpad\ZApi\Model\UserMsg;
     use Lernpad\ZApi\Model\EventMsg;
@@ -45,6 +46,8 @@ Step 2: Getting Started
     } catch (\ZMQSocketException $e) {
         // ...
     } catch (ValidatorException $e) {
+        // ...
+    } catch (TimeoutException $e) {
         // ...
     }
 

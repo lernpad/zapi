@@ -17,6 +17,12 @@ class ClientProtocol
     private $host;
     private $port;
     private $pw;
+    private $timeout;
+
+    public function __construct($timeout = 1000)
+    {
+        $this->timeout = $timeout;
+    }
 
     /**
      *
@@ -51,7 +57,7 @@ class ClientProtocol
             return(StatusMsg::statusError);
         }
 
-        $socket = new Socket(\ZMQ::SOCKET_REQ);
+        $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
         $socket->connect($this->host, $this->port);
         $socket->sendMsg(new MethodMsg($cmd), \ZMQ::MODE_SNDMORE);
         $socket->sendMsg($this->pw, \ZMQ::MODE_SNDMORE);
@@ -74,7 +80,7 @@ class ClientProtocol
             return(StatusMsg::statusError);
         }
 
-        $socket = new Socket(\ZMQ::SOCKET_REQ);
+        $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
         $socket->connect($this->host, $this->port);
         $socket->sendMsg(new MethodMsg(MethodMsg::EventsGetCalendar), \ZMQ::MODE_SNDMORE);
         $socket->sendMsg($this->pw);
@@ -120,7 +126,7 @@ class ClientProtocol
             return(StatusMsg::statusError);
         }
 
-        $socket = new Socket(\ZMQ::SOCKET_REQ);
+        $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
         $socket->connect($this->host, $this->port);
 
         $socket->sendMsg(new MethodMsg(MethodMsg::UserPassword), \ZMQ::MODE_SNDMORE);
@@ -141,7 +147,7 @@ class ClientProtocol
      */
     public function userGet($login)
     {
-        $socket = new Socket(\ZMQ::SOCKET_REQ);
+        $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
         $socket->connect($this->host, $this->port);
 
         $socket->sendMsg(new MethodMsg(MethodMsg::UserGet), \ZMQ::MODE_SNDMORE);

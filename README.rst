@@ -40,7 +40,7 @@ Step 2: Getting Started
     $newUser->setName('Ivan Urgant');
     $newUser->setEnabled(true);
 
-    $status = StatusMsg::statusFatal;
+    $status = StatusMsg::statusError;
     try {
         $status = $cp->userCreate($newUser);
         echo "new user status(".$status.",".StatusMsg::getName($status).")\n";
@@ -51,12 +51,13 @@ Step 2: Getting Started
     } catch (TimeoutException $e) {
         // ...
     }
-    
+
 Check if User exists
 
 .. code-block:: php
 
-    $status = $cp->userGet($newLogin);
+    $user = new UserMsg();
+    $status = $cp->userGet($login, $user);
     echo "get user status(".$status.",".StatusMsg::getName($status).")\n";
 
 Try to get EventCalendar

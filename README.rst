@@ -50,10 +50,8 @@ Step 2: Getting Started
         // ...
     } catch (TimeoutException $e) {
         // ...
-    } final {
-       // do something with status
     }
-
+    
 Check if User exists
 
 .. code-block:: php

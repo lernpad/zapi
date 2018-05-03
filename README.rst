@@ -40,6 +40,7 @@ Step 2: Getting Started
     $newUser->setName('Ivan Urgant');
     $newUser->setEnabled(true);
 
+    $status = StatusMsg::statusFatal;
     try {
         $status = $cp->userCreate($newUser);
         echo "new user status(".$status.",".StatusMsg::getName($status).")\n";
@@ -49,6 +50,8 @@ Step 2: Getting Started
         // ...
     } catch (TimeoutException $e) {
         // ...
+    } final {
+       // do something with status
     }
 
 Check if User exists

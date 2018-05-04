@@ -173,7 +173,7 @@ class ClientProtocol
      */
     public function userService($login, \DateTime $valid_till)
     {
-        $socket = new Socket(\ZMQ::SOCKET_REQ);
+        $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
         $socket->connect($this->host, $this->port);
 
         $socket->sendMsg(new MethodMsg(MethodMsg::UserService), \ZMQ::MODE_SNDMORE);

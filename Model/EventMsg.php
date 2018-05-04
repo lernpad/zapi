@@ -458,6 +458,7 @@ class EventMsg extends AbstractMsg
         $this->setConflict($data['is_conflict']);
         $this->setPublic($data['is_public']);
         $this->setActive($data['is_active']);
+        $this->setComment($data['comment']);
         //---
         $this->id = $data['id'];
         $this->created_at = $data['created_at'];

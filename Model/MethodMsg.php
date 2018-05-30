@@ -4,18 +4,17 @@ namespace Lernpad\ZApi\Model;
 
 class MethodMsg extends CodeMsg
 {
+    const Auth = 1;
+    const EventsGetActual = 10;
+    const EventsGetCalendar = 11;
+    const EventsGetAll = 12;
+    const EventsGetActive = 13;
+    const UserCreate = 14;
+    const UserPassword = 18;
+    const UserService = 29;
+    const UserGet = 30;
 
-    const Auth                      = 1;
-    const EventsGetActual           = 10;
-    const EventsGetCalendar         = 11;
-    const EventsGetAll              = 12;
-    const EventsGetActive           = 13;
-    const UserCreate                = 14;
-    const UserPassword              = 18;
-    const UserService               = 29;
-    const UserGet                   = 30;
-
-    static private $methods = [
+    private static $methods = [
         self::Auth => 'Auth',
         self::EventsGetActual => 'EventsGetActual',
         self::EventsGetCalendar => 'EventsGetCalendar',
@@ -24,7 +23,7 @@ class MethodMsg extends CodeMsg
         self::UserCreate => 'UserCreate',
         self::UserPassword => 'UserPassword',
         self::UserService => 'UserService',
-        self::UserGet => 'UserGet'
+        self::UserGet => 'UserGet',
     ];
 
     public function __construct($code)
@@ -33,7 +32,7 @@ class MethodMsg extends CodeMsg
     }
 
     /**
-     * Set code
+     * Set code.
      *
      * @param int $code
      *
@@ -53,7 +52,7 @@ class MethodMsg extends CodeMsg
      *
      * @return string
      */
-    static public function getName($method)
+    public static function getName($method)
     {
         if (isset(self::$methods[$method])) {
             return self::$methods[$method];
@@ -63,7 +62,7 @@ class MethodMsg extends CodeMsg
     }
 
     /**
-     * Pack code to binary string
+     * Pack code to binary string.
      *
      * @return string
      */
@@ -73,7 +72,7 @@ class MethodMsg extends CodeMsg
     }
 
     /**
-     * Unpack binary string to MethodMsg
+     * Unpack binary string to MethodMsg.
      *
      * @param string $bytes
      *
@@ -96,5 +95,4 @@ class MethodMsg extends CodeMsg
     {
         return array_keys(self::$methods);
     }
-
 }

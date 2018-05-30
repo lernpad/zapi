@@ -4,11 +4,10 @@ namespace Lernpad\ZApi\Model;
 
 class CodeMsg extends AbstractMsg
 {
-
     private $code;
 
     /**
-     * Get code
+     * Get code.
      *
      * @return int
      */
@@ -18,7 +17,7 @@ class CodeMsg extends AbstractMsg
     }
 
     /**
-     * Set code
+     * Set code.
      *
      * @param int $code
      *
@@ -32,7 +31,7 @@ class CodeMsg extends AbstractMsg
     }
 
     /**
-     * Pack code to binary string
+     * Pack code to binary string.
      *
      * @return string
      */
@@ -42,7 +41,7 @@ class CodeMsg extends AbstractMsg
     }
 
     /**
-     * Unpack binary string to MethodMsg
+     * Unpack binary string to MethodMsg.
      *
      * @param string $bytes
      *
@@ -56,4 +55,3 @@ class CodeMsg extends AbstractMsg
         return $this;
     }
 }
-

@@ -2,18 +2,16 @@
 
 namespace Lernpad\ZApi;
 
-use Lernpad\ZApi\Model\StatusMsg;
-use Lernpad\ZApi\Model\MethodMsg;
 use Lernpad\ZApi\Model\CredentialMsg;
-use Lernpad\ZApi\Model\UserMsg;
 use Lernpad\ZApi\Model\EventMsg;
+use Lernpad\ZApi\Model\MethodMsg;
 use Lernpad\ZApi\Model\NumberMsg;
-use Lernpad\ZApi\Socket;
+use Lernpad\ZApi\Model\StatusMsg;
+use Lernpad\ZApi\Model\UserMsg;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
 class ClientProtocol
 {
-
     private $host;
     private $port;
     private $pw;
@@ -25,10 +23,10 @@ class ClientProtocol
     }
 
     /**
-     *
-     * @param type $host
-     * @param type $port
+     * @param type    $host
+     * @param type    $port
      * @param UserMsg $authUser
+     *
      * @todo cal Login to get full authUser
      */
     public function connect($host, $port, UserMsg &$authUser)
@@ -54,7 +52,7 @@ class ClientProtocol
     {
         //--- проверки
         if (!$this->pw->isValid() || !$user->isValid()) {
-            return(StatusMsg::statusError);
+            return StatusMsg::statusError;
         }
 
         $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
@@ -66,7 +64,7 @@ class ClientProtocol
         /* @var $status StatusMsg */
         $status = $socket->recvMsg(StatusMsg::class);
         //---
-        return($status->getCode());
+        return $status->getCode();
     }
 
     /**
@@ -77,7 +75,7 @@ class ClientProtocol
     {
         //--- проверки
         if (!$this->pw->isValid()) {
-            return(StatusMsg::statusError);
+            return StatusMsg::statusError;
         }
 
         $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
@@ -87,8 +85,8 @@ class ClientProtocol
 
         /* @var $status StatusMsg */
         $status = $socket->recvMsg(StatusMsg::class);
-        if ($status->getCode() != StatusMsg::statusOk) {
-            return($status->getStatus());
+        if (StatusMsg::statusOk !== $status->getCode()) {
+            return $status->getStatus();
         }
 
         /* @var $count NumberMsg */
@@ -107,7 +105,7 @@ class ClientProtocol
         /* @var $count NumberMsg */
         $socket->recvMsg(NumberMsg::class);
         //---
-        return($events);
+        return $events;
     }
 
     /**
@@ -116,14 +114,13 @@ class ClientProtocol
      */
     public function userPassword($login, $newPassword)
     {
-
         $userPw = new CredentialMsg();
         $userPw->setLogin($login);
         $userPw->setPassword($newPassword);
 
         //--- проверки
         if (!$userPw->isValid()) {
-            return(StatusMsg::statusError);
+            return StatusMsg::statusError;
         }
 
         $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
@@ -135,17 +132,17 @@ class ClientProtocol
 
         /* @var $status StatusMsg */
         $status = $socket->recvMsg(StatusMsg::class);
-        return($status->getCode());
+
+        return $status->getCode();
     }
 
     /**
+     * @param int $login
      *
      * @throws \ZMQSocketException
      * @throws ValidatorException
-     *
-     * @param int $login
      */
-    public function userGet($login, UserMsg& $user)
+    public function userGet($login, UserMsg &$user)
     {
         $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
         $socket->connect($this->host, $this->port);
@@ -160,16 +157,16 @@ class ClientProtocol
         $status = $socket->recvMsg(StatusMsg::class);
         /* @var $tmp UserMsg */
         $user = $socket->recvMsg(UserMsg::class);
-        return($status->getCode());
+
+        return $status->getCode();
     }
 
     /**
+     * @param int       $login
+     * @param \DateTime $valid_till
      *
      * @throws \ZMQSocketException
      * @throws ValidatorException
-     *
-     * @param int $login
-     * @param \DateTime $valid_till
      */
     public function userService($login, \DateTime $valid_till)
     {
@@ -189,9 +186,7 @@ class ClientProtocol
 
         /* @var $status StatusMsg */
         $status = $socket->recvMsg(StatusMsg::class);
-        return($status->getCode());
+
+        return $status->getCode();
     }
-
 }
-
-?>

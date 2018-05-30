@@ -2,13 +2,12 @@
 
 namespace Lernpad\ZApi;
 
-use Lernpad\ZApi\Model\AbstractMsg;
 use Lernpad\ZApi\Exception\TimeoutException;
+use Lernpad\ZApi\Model\AbstractMsg;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
 class Socket
 {
-
     private $dsn;
     private $raw;
     private $timeout;
@@ -24,7 +23,7 @@ class Socket
 
     public function connect($host, $port)
     {
-        $this->dsn = "tcp://".$host.":".$port;
+        $this->dsn = 'tcp://'.$host.':'.$port;
         $endpoints = $this->raw->getEndpoints();
         if (!in_array($this->dsn, $endpoints['connect'])) {
             $this->raw->connect($this->dsn);
@@ -62,16 +61,15 @@ class Socket
             if (is_subclass_of($class, AbstractMsg::class)) {
                 $bytes = $this->raw->recv();
                 /* @var $message AbstractMsg */
-                $message = new $class;
+                $message = new $class();
                 $message->unpack($bytes);
                 $message->validate();
+
                 return $message;
-            } else {
-                throw new \InvalidArgumentException();
             }
-        } else {
-            throw new TimeoutException();
+            throw new \InvalidArgumentException();
         }
+        throw new TimeoutException();
     }
 
     /**
@@ -83,5 +81,4 @@ class Socket
         $message->validate();
         $this->raw->send($message->pack(), $mode);
     }
-
 }

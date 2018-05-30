@@ -1,36 +1,30 @@
 <?php
 
-
 namespace Lernpad\ZApi\Model;
 
 class UserMsg extends AbstractMsg
 {
     /**
-     *
      * @var int
      */
     private $login;
 
     /**
-     *
      * @var int
      */
     private $group;
 
     /**
-     *
      * @var string
      */
     private $password;
 
     /**
-     *
      * @var bool
      */
     private $enabled;
 
     /**
-     *
      * @var string
      */
     private $name;
@@ -61,7 +55,6 @@ class UserMsg extends AbstractMsg
 
     private $updated_at;
 
-
     public function getLogin()
     {
         return $this->login;
@@ -70,6 +63,7 @@ class UserMsg extends AbstractMsg
     public function setLogin($login)
     {
         $this->login = $login;
+
         return $this;
     }
 
@@ -81,6 +75,7 @@ class UserMsg extends AbstractMsg
     public function setGroup($group)
     {
         $this->group = $group;
+
         return $this;
     }
 
@@ -92,6 +87,7 @@ class UserMsg extends AbstractMsg
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -103,6 +99,7 @@ class UserMsg extends AbstractMsg
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
+
         return $this;
     }
 
@@ -114,6 +111,7 @@ class UserMsg extends AbstractMsg
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -125,6 +123,7 @@ class UserMsg extends AbstractMsg
     public function setCountry($country)
     {
         $this->country = $country;
+
         return $this;
     }
 
@@ -136,6 +135,7 @@ class UserMsg extends AbstractMsg
     public function setCity($city)
     {
         $this->city = $city;
+
         return $this;
     }
 
@@ -147,6 +147,7 @@ class UserMsg extends AbstractMsg
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
         return $this;
     }
 
@@ -158,6 +159,7 @@ class UserMsg extends AbstractMsg
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -169,6 +171,7 @@ class UserMsg extends AbstractMsg
     public function setOffice($office)
     {
         $this->office = $office;
+
         return $this;
     }
 
@@ -180,6 +183,7 @@ class UserMsg extends AbstractMsg
     public function setExtra1($extra1)
     {
         $this->extra1 = $extra1;
+
         return $this;
     }
 
@@ -191,6 +195,7 @@ class UserMsg extends AbstractMsg
     public function setExtra2($extra2)
     {
         $this->extra2 = $extra2;
+
         return $this;
     }
 
@@ -202,6 +207,7 @@ class UserMsg extends AbstractMsg
     public function setLastIp($lastIp)
     {
         $this->last_ip = $lastIp;
+
         return $this;
     }
 
@@ -213,6 +219,7 @@ class UserMsg extends AbstractMsg
     public function setConnectedAt($connectedAt)
     {
         $this->connected_at = $connectedAt;
+
         return $this;
     }
 
@@ -224,18 +231,19 @@ class UserMsg extends AbstractMsg
     public function setPaidAt($paidAt)
     {
         $this->paid_at = $paidAt;
+
         return $this;
     }
-
 
     public function getValidTill()
     {
         return $this->valid_till;
     }
 
-     public function setValidTill($validTill)
+    public function setValidTill($validTill)
     {
         $this->valid_till = $validTill;
+
         return $this;
     }
 
@@ -251,34 +259,34 @@ class UserMsg extends AbstractMsg
 
     public function pack()
     {
-        return  pack('i',    $this->getLogin()) .
-                pack('i',    $this->getGroup()) .
-                pack('a16',  $this->getPassword()) .
-                pack('i',    $this->isEnabled()) .
-                pack('a128', $this->getName()) .
-                pack('a32',  $this->getCountry()) .
-                pack('a32',  $this->getCity()) .
-                pack('a32',  $this->getPhone()) .
-                pack('a32',  $this->getEmail()) .
-                pack('a32',  $this->getOffice()) .
-                pack('a32',  $this->getExtra1()) .
-                pack('a32',  $this->getExtra2()) .
-                pack('i',    $this->getLastIp()) .
-                pack('i',    $this->getConnectedAt()) .
-                pack('i',    $this->getPaidAt()) .
-                pack('i',    $this->getValidTill()) .
-                pack('i',    $this->getCreatedAt()) .
-                pack('i',    $this->getUpdatedAt())
+        return  pack('i', $this->getLogin()).
+                pack('i', $this->getGroup()).
+                pack('a16', $this->getPassword()).
+                pack('i', $this->isEnabled()).
+                pack('a128', $this->getName()).
+                pack('a32', $this->getCountry()).
+                pack('a32', $this->getCity()).
+                pack('a32', $this->getPhone()).
+                pack('a32', $this->getEmail()).
+                pack('a32', $this->getOffice()).
+                pack('a32', $this->getExtra1()).
+                pack('a32', $this->getExtra2()).
+                pack('i', $this->getLastIp()).
+                pack('i', $this->getConnectedAt()).
+                pack('i', $this->getPaidAt()).
+                pack('i', $this->getValidTill()).
+                pack('i', $this->getCreatedAt()).
+                pack('i', $this->getUpdatedAt())
         ;
     }
 
     public function unpack($bytes)
     {
         $data = unpack('ilogin/igroup/a16password/ienabled/a128name'
-                . '/a32country/a32city/a32phone/a32email/a32office'
-                . '/a32extra1/a32extra2/ilast_ip/iconnected_at/ipaid_at'
-                . '/ivalid_till/icreated_at/iupdated_at', $bytes);
-        //
+                .'/a32country/a32city/a32phone/a32email/a32office'
+                .'/a32extra1/a32extra2/ilast_ip/iconnected_at/ipaid_at'
+                .'/ivalid_till/icreated_at/iupdated_at', $bytes);
+
         $this->setLogin($data['login']);
         $this->setGroup($data['group']);
         $this->setPassword($data['password']);
@@ -300,4 +308,3 @@ class UserMsg extends AbstractMsg
         $this->updated_at = $data['updated_at'];
     }
 }
-

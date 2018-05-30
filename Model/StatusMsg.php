@@ -4,23 +4,22 @@ namespace Lernpad\ZApi\Model;
 
 class StatusMsg extends CodeMsg
 {
+    const 	statusOk = 0;
+    const 	statusNotExists = 1;
+    const 	statusError = 2;
+    const 	statusFatal = 3;
+    const  	statusLoginInvalid = 4;
+    const  	statusLoginDisabled = 5;
+    const 	statusAccessDenied = 6;
 
-    const 	statusOk                = 0;
-    const 	statusNotExists         = 1;
-    const 	statusError             = 2;
-    const 	statusFatal             = 3;
-    const  	statusLoginInvalid      = 4;
-    const  	statusLoginDisabled     = 5;
-    const 	statusAccessDenied      = 6;
-
-    static private $statuses = [
+    private static $statuses = [
         self::statusOk => 'OK',
         self::statusNotExists => 'Not Exists',
         self::statusError => 'Common Error',
         self::statusFatal => 'Fatal Error',
         self::statusLoginInvalid => 'Login Invalid',
         self::statusLoginDisabled => 'Login Disabled',
-        self::statusAccessDenied => 'Access Denied'
+        self::statusAccessDenied => 'Access Denied',
     ];
 
     public function __construct()
@@ -32,6 +31,7 @@ class StatusMsg extends CodeMsg
      * Set status.
      *
      * @override
+     *
      * @param int $status
      *
      * @return StatusMsg
@@ -50,7 +50,7 @@ class StatusMsg extends CodeMsg
      *
      * @return string
      */
-    static public function getName($code)
+    public static function getName($code)
     {
         if (isset(self::$statuses[$code])) {
             return self::$statuses[$code];
@@ -60,7 +60,7 @@ class StatusMsg extends CodeMsg
     }
 
     /**
-     * Pack status to binary string
+     * Pack status to binary string.
      *
      * @return string
      */
@@ -70,7 +70,7 @@ class StatusMsg extends CodeMsg
     }
 
     /**
-     * Unpack binary string to StatusMsg
+     * Unpack binary string to StatusMsg.
      *
      * @param string $bytes
      *
@@ -89,4 +89,3 @@ class StatusMsg extends CodeMsg
         return array_keys(self::$statuses);
     }
 }
-

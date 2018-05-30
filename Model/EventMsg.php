@@ -5,91 +5,76 @@ namespace Lernpad\ZApi\Model;
 class EventMsg extends AbstractMsg
 {
     /**
-     *
      * @var int
      */
     private $id;
 
     /**
-     *
      * @var int
      */
     private $datetime;
 
     /**
-     *
      * @var string
      */
     private $title;
 
     /**
-     *
      * @var string
      */
     private $country;
 
     /**
-     *
      * @var string
      */
     private $currency1;
 
     /**
-     *
      * @var string
      */
     private $currency2;
 
     /**
-     *
      * @var string
      */
     private $trigger_buy;
 
     /**
-     *
      * @var string
      */
     private $trigger_sell;
 
     /**
-     *
      * @var int
      */
     private $moving;
 
     /**
-     *
-     * @var boolean
+     * @var bool
      */
     private $is_conflict;
 
     /**
-     *
-     * @var boolean
+     * @var bool
      */
     private $is_public;
 
     /**
-     *
-     * @var boolean
+     * @var bool
      */
     private $is_active;
 
     /**
-     *
      * @var string
      */
     private $comment;
 
     /**
-     *
      * @var int
      */
     private $created_at;
 
     /**
-     *
      * @var int
      */
     private $updated_at;
@@ -100,7 +85,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id
      *
@@ -114,7 +99,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set datetime
+     * Set datetime.
      *
      * @param int $datetime
      *
@@ -128,7 +113,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get datetime
+     * Get datetime.
      *
      * @return int
      */
@@ -138,7 +123,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -152,7 +137,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -162,7 +147,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set country
+     * Set country.
      *
      * @param string $country
      *
@@ -176,7 +161,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get country
+     * Get country.
      *
      * @return string
      */
@@ -186,7 +171,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set currency1
+     * Set currency1.
      *
      * @param string $currency1
      *
@@ -200,7 +185,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get currency1
+     * Get currency1.
      *
      * @return string
      */
@@ -210,7 +195,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set currency2
+     * Set currency2.
      *
      * @param string $currency2
      *
@@ -224,7 +209,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get currency2
+     * Get currency2.
      *
      * @return string
      */
@@ -234,7 +219,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set triggerBuy
+     * Set triggerBuy.
      *
      * @param string $triggerBuy
      *
@@ -248,7 +233,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get triggerBuy
+     * Get triggerBuy.
      *
      * @return string
      */
@@ -258,7 +243,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set triggerSell
+     * Set triggerSell.
      *
      * @param string $triggerSell
      *
@@ -272,7 +257,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get triggerSell
+     * Get triggerSell.
      *
      * @return string
      */
@@ -282,7 +267,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set moving
+     * Set moving.
      *
      * @param int $moving
      *
@@ -296,7 +281,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get moving
+     * Get moving.
      *
      * @return int
      */
@@ -306,9 +291,9 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set isConflict
+     * Set isConflict.
      *
-     * @param boolean $isConflict
+     * @param bool $isConflict
      *
      * @return EventMsg
      */
@@ -320,9 +305,9 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get isConflict
+     * Get isConflict.
      *
-     * @return boolean
+     * @return bool
      */
     public function isConflict()
     {
@@ -330,9 +315,9 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set isPublic
+     * Set isPublic.
      *
-     * @param boolean $isPublic
+     * @param bool $isPublic
      *
      * @return EventMsg
      */
@@ -344,9 +329,9 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get isPublic
+     * Get isPublic.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPublic()
     {
@@ -354,9 +339,9 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set isActive
+     * Set isActive.
      *
-     * @param boolean $isActive
+     * @param bool $isActive
      *
      * @return EventMsg
      */
@@ -368,9 +353,9 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get isActive
+     * Get isActive.
      *
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {
@@ -378,7 +363,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Set comment
+     * Set comment.
      *
      * @param string $comment
      *
@@ -392,7 +377,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get comment
+     * Get comment.
      *
      * @return string
      */
@@ -402,7 +387,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get date of creation
+     * Get date of creation.
      *
      * @return int
      */
@@ -412,7 +397,7 @@ class EventMsg extends AbstractMsg
     }
 
     /**
-     * Get date of last update
+     * Get date of last update.
      *
      * @return int
      */
@@ -423,30 +408,30 @@ class EventMsg extends AbstractMsg
 
     public function pack()
     {
-        return  pack('i',    $this->getId()) .
-                pack('i',    $this->getDatetime()) .
-                pack('a50',  $this->getTitle()) .
-                pack('a32',  $this->getCountry()) .
-                pack('a12',  $this->getCurrency1()) .
-                pack('a12',  $this->getCurrency2()) .
-                pack('a32',  $this->getTriggerBuy()) .
-                pack('a32',  $this->getTriggerSell()) .
-                pack('i',  $this->getMoving()) .
-                pack('i',  $this->isConflict()) .
-                pack('i',  $this->isPublic()) .
-                pack('i',  $this->isActive()) .
-                pack('a256',  $this->getComment()) .
-                pack('i',    $this->getCreatedAt()) .
-                pack('i',    $this->getUpdatedAt())
+        return  pack('i', $this->getId()).
+                pack('i', $this->getDatetime()).
+                pack('a50', $this->getTitle()).
+                pack('a32', $this->getCountry()).
+                pack('a12', $this->getCurrency1()).
+                pack('a12', $this->getCurrency2()).
+                pack('a32', $this->getTriggerBuy()).
+                pack('a32', $this->getTriggerSell()).
+                pack('i', $this->getMoving()).
+                pack('i', $this->isConflict()).
+                pack('i', $this->isPublic()).
+                pack('i', $this->isActive()).
+                pack('a256', $this->getComment()).
+                pack('i', $this->getCreatedAt()).
+                pack('i', $this->getUpdatedAt())
         ;
     }
 
     public function unpack($bytes)
     {
         $data = unpack('iid/idate/a50title/a32country/a12currency1/a12currency2'
-                . '/a32trigger_buy/a32trigger_sell/imoving/iis_conflict/iis_public'
-                . '/iis_active/a256comment/icreated_at/iupdated_at', $bytes);
-        //
+                .'/a32trigger_buy/a32trigger_sell/imoving/iis_conflict/iis_public'
+                .'/iis_active/a256comment/icreated_at/iupdated_at', $bytes);
+
         $this->setDatetime($data['date']);
         $this->setTitle($data['title']);
         $this->setCountry($data['country']);

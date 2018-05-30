@@ -2,29 +2,17 @@
 
 namespace Lernpad\ZApi\Model;
 
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Exception\ValidatorException;
+use Symfony\Component\Validator\Validation;
 
-/**
- *
- */
 abstract class AbstractMsg implements PackableInterface
 {
     private $violations = [];
 
-    /**
-     *
-     */
     abstract public function pack();
 
-    /**
-     *
-     */
     abstract public function unpack($bytes);
 
-    /**
-     *
-     */
     public function isValid()
     {
         $validator = Validation::createValidatorBuilder()
@@ -35,8 +23,10 @@ abstract class AbstractMsg implements PackableInterface
 
         if (0 !== count($violations)) {
             $this->violations = $violations;
+
             return false;
         }
+
         return true;
     }
 

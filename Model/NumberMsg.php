@@ -4,11 +4,10 @@ namespace Lernpad\ZApi\Model;
 
 class NumberMsg extends AbstractMsg
 {
-
     private $number;
 
     /**
-     * Get number
+     * Get number.
      *
      * @return int
      */
@@ -18,7 +17,7 @@ class NumberMsg extends AbstractMsg
     }
 
     /**
-     * Set number
+     * Set number.
      *
      * @param int $number
      *
@@ -32,7 +31,7 @@ class NumberMsg extends AbstractMsg
     }
 
     /**
-     * Pack number to binary string
+     * Pack number to binary string.
      *
      * @return string
      */
@@ -42,7 +41,7 @@ class NumberMsg extends AbstractMsg
     }
 
     /**
-     * Unpack binary string to NumberMsg
+     * Unpack binary string to NumberMsg.
      *
      * @param string $bytes
      *
@@ -56,4 +55,3 @@ class NumberMsg extends AbstractMsg
         return $this;
     }
 }
-

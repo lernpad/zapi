@@ -28,31 +28,18 @@ class UserMsg extends AbstractMsg
      * @var string
      */
     private $name;
-
     private $country;
-
     private $city;
-
     private $phone;
-
     private $email;
-
     private $office;
-
     private $extra1;
-
     private $extra2;
-
     private $last_ip;
-
     private $connected_at;
-
     private $paid_at;
-
     private $valid_till;
-
     private $created_at;
-
     private $updated_at;
 
     public function getLogin()
@@ -259,7 +246,26 @@ class UserMsg extends AbstractMsg
 
     public function pack()
     {
-        throw new \Exception('Not implemented');
+        return pack('i', $this->getLogin()).
+                pack('i', $this->getGroup()).
+                pack('a16', $this->getPassword()).
+                pack('i', $this->isEnabled()).
+                pack('a128', $this->getName()).
+                pack('a32', $this->getCountry()).
+                pack('a32', $this->getCity()).
+                pack('a32', $this->getPhone()).
+                pack('a32', $this->getEmail()).
+                pack('a32', $this->getOffice()).
+                pack('a32', $this->getExtra1()).
+                pack('a32', $this->getExtra2()).
+                pack('i', $this->getLastIp()).
+                pack('i', $this->getConnectedAt()).
+                pack('i', $this->getPaidAt()).
+                pack('i', $this->getValidTill()).
+                pack('i5', 0).
+                pack('i', $this->getCreatedAt()).
+                pack('i', $this->getUpdatedAt())
+        ;
     }
 
     public function unpack($bytes)

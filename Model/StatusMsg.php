@@ -11,6 +11,10 @@ class StatusMsg extends CodeMsg
     const  	statusLoginInvalid = 4;
     const  	statusLoginDisabled = 5;
     const 	statusAccessDenied = 6;
+    const       statusOldVersion = 7;
+    const       statusInvalidParam = 8;
+    const       statusMaintenanceMode = 9;
+    const       statusObjectNotExists = 10;
 
     private static $statuses = [
         self::statusOk => 'OK',
@@ -20,6 +24,10 @@ class StatusMsg extends CodeMsg
         self::statusLoginInvalid => 'Login Invalid',
         self::statusLoginDisabled => 'Login Disabled',
         self::statusAccessDenied => 'Access Denied',
+        self::statusOldVersion => 'Old Version',
+        self::statusInvalidParam => 'Invalid Param',
+        self::statusMaintenanceMode => 'Maintenance Mode',
+        self::statusObjectNotExists => 'Object Not Exists',
     ];
 
     public function __construct()

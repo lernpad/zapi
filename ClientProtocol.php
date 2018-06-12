@@ -70,23 +70,29 @@ class ClientProtocol
     /**
      * @throws \ZMQSocketException
      * @throws ValidatorException
+     *
+     * @return EventMsg[] | int
      */
-    public function eventsGet()
+    public function eventsGet($client)
     {
         //--- проверки
         if (!$this->pw->isValid()) {
             return StatusMsg::statusError;
         }
 
+        $loginMsg = new NumberMsg();
+        $loginMsg->setNumber($client);
+
         $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
         $socket->connect($this->host, $this->port);
-        $socket->sendMsg(new MethodMsg(MethodMsg::EventsGetCalendar), \ZMQ::MODE_SNDMORE);
-        $socket->sendMsg($this->pw);
+        $socket->sendMsg(new MethodMsg(MethodMsg::EventsWebCalendar), \ZMQ::MODE_SNDMORE);
+        $socket->sendMsg($this->pw, \ZMQ::MODE_SNDMORE);
+        $socket->sendMsg($loginMsg);
 
         /* @var $status StatusMsg */
         $status = $socket->recvMsg(StatusMsg::class);
         if (StatusMsg::statusOk !== $status->getCode()) {
-            return $status->getStatus();
+            return $status->getCode();
         }
 
         /* @var $count NumberMsg */

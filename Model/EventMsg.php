@@ -408,29 +408,14 @@ class EventMsg extends AbstractMsg
 
     public function pack()
     {
-        return  pack('i', $this->getId()).
-                pack('i', $this->getDatetime()).
-                pack('a50', $this->getTitle()).
-                pack('a32', $this->getCountry()).
-                pack('a12', $this->getCurrency1()).
-                pack('a12', $this->getCurrency2()).
-                pack('a32', $this->getTriggerBuy()).
-                pack('a32', $this->getTriggerSell()).
-                pack('i', $this->getMoving()).
-                pack('i', $this->isConflict()).
-                pack('i', $this->isPublic()).
-                pack('i', $this->isActive()).
-                pack('a256', $this->getComment()).
-                pack('i', $this->getCreatedAt()).
-                pack('i', $this->getUpdatedAt())
-        ;
+        throw new \Exception('Not implemented');
     }
 
     public function unpack($bytes)
     {
-        $data = unpack('iid/idate/a50title/a32country/a12currency1/a12currency2'
+        $data = unpack('iid/igroup/idate/a50title/a32country/a12currency1/a12currency2'
                 .'/a32trigger_buy/a32trigger_sell/imoving/iis_conflict/iis_public'
-                .'/iis_active/a256comment/icreated_at/iupdated_at', $bytes);
+                .'/iis_active/iis_appointed/a1024comment/i5reserved/icreated_at/iupdated_at', $bytes);
 
         $this->setDatetime($data['date']);
         $this->setTitle($data['title']);

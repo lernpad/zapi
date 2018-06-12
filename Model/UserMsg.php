@@ -259,25 +259,7 @@ class UserMsg extends AbstractMsg
 
     public function pack()
     {
-        return  pack('i', $this->getLogin()).
-                pack('i', $this->getGroup()).
-                pack('a16', $this->getPassword()).
-                pack('i', $this->isEnabled()).
-                pack('a128', $this->getName()).
-                pack('a32', $this->getCountry()).
-                pack('a32', $this->getCity()).
-                pack('a32', $this->getPhone()).
-                pack('a32', $this->getEmail()).
-                pack('a32', $this->getOffice()).
-                pack('a32', $this->getExtra1()).
-                pack('a32', $this->getExtra2()).
-                pack('i', $this->getLastIp()).
-                pack('i', $this->getConnectedAt()).
-                pack('i', $this->getPaidAt()).
-                pack('i', $this->getValidTill()).
-                pack('i', $this->getCreatedAt()).
-                pack('i', $this->getUpdatedAt())
-        ;
+        throw new \Exception('Not implemented');
     }
 
     public function unpack($bytes)
@@ -285,7 +267,7 @@ class UserMsg extends AbstractMsg
         $data = unpack('ilogin/igroup/a16password/ienabled/a128name'
                 .'/a32country/a32city/a32phone/a32email/a32office'
                 .'/a32extra1/a32extra2/ilast_ip/iconnected_at/ipaid_at'
-                .'/ivalid_till/icreated_at/iupdated_at', $bytes);
+                .'/ivalid_till/i5reserved/icreated_at/iupdated_at', $bytes);
 
         $this->setLogin($data['login']);
         $this->setGroup($data['group']);

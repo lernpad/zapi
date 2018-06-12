@@ -5,25 +5,19 @@ namespace Lernpad\ZApi\Model;
 class MethodMsg extends CodeMsg
 {
     const Auth = 1;
-    const EventsGetActual = 10;
-    const EventsGetCalendar = 11;
-    const EventsGetAll = 12;
-    const EventsGetActive = 13;
     const UserCreate = 14;
     const UserPassword = 18;
     const UserService = 29;
     const UserGet = 30;
+    const EventsWebCalendar = 36;
 
     private static $methods = [
         self::Auth => 'Auth',
-        self::EventsGetActual => 'EventsGetActual',
-        self::EventsGetCalendar => 'EventsGetCalendar',
-        self::EventsGetAll => 'EventsGetAll',
-        self::EventsGetActive => 'EventsGetActive',
         self::UserCreate => 'UserCreate',
         self::UserPassword => 'UserPassword',
         self::UserService => 'UserService',
         self::UserGet => 'UserGet',
+        self::EventsWebCalendar => 'EventsWebCalendar',
     ];
 
     public function __construct($code)

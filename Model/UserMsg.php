@@ -262,7 +262,7 @@ class UserMsg extends AbstractMsg
                 pack('i', $this->getConnectedAt()).
                 pack('i', $this->getPaidAt()).
                 pack('i', $this->getValidTill()).
-                pack('i5', 0).
+		pack('i', 0).pack('i', 0).pack('i', 0).pack('i', 0). pack('i', 0).
                 pack('i', $this->getCreatedAt()).
                 pack('i', $this->getUpdatedAt())
         ;

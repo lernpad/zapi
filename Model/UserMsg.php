@@ -250,7 +250,7 @@ class UserMsg extends AbstractMsg
                 pack('i', $this->getGroup()).
                 pack('a16', $this->getPassword()).
                 pack('i', $this->isEnabled()).
-                pack('a128', $this->getName()).
+		pack('a128', iconv('utf-8', 'windows-1251', $this->getName())).
                 pack('a32', $this->getCountry()).
                 pack('a32', $this->getCity()).
                 pack('a32', $this->getPhone()).

@@ -77,9 +77,16 @@ Change User password
     $status = $cp->userPassword($login, "foobar");
     echo "password status(".$status.",".StatusMsg::getName($status).")\n";
 
-Change User service
+Change User service [deprecated]
 
 .. code-block:: php
 
     $status = $cp->userService($login, new \DateTime('+3 month'));
     echo "service status(".$status.",".StatusMsg::getName($status).")\n";
+
+Change User Tariff
+
+.. code-block:: php
+
+    $status = $cp->userTariff($login, $tariffId, new \DateTime('+3 month'));
+    echo "tariff status(".$status.",".StatusMsg::getName($status).")\n";

@@ -195,4 +195,38 @@ class ClientProtocol
 
         return $status->getCode();
     }
+
+    /**
+     * @param int       $login
+     * @param int       $tariff_id
+     * @param \DateTime $valid_till
+     *
+     * @throws \ZMQSocketException
+     * @throws ValidatorException
+     */
+    public function userTariff($login, $tariff_id, \DateTime $valid_till)
+    {
+        $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
+        $socket->connect($this->host, $this->port);
+
+        $socket->sendMsg(new MethodMsg(MethodMsg::UserTariff), \ZMQ::MODE_SNDMORE);
+        $socket->sendMsg($this->pw, \ZMQ::MODE_SNDMORE);
+
+        $loginMsg = new NumberMsg();
+        $loginMsg->setNumber($login);
+        $socket->sendMsg($loginMsg, \ZMQ::MODE_SNDMORE);
+
+        $tariffMsg = new NumberMsg();
+        $tariffMsg->setNumber($tariff_id);
+        $socket->sendMsg($tariffMsg, \ZMQ::MODE_SNDMORE);
+
+        $timestampMsg = new NumberMsg();
+        $timestampMsg->setNumber($valid_till->getTimestamp());
+        $socket->sendMsg($timestampMsg);
+
+        /* @var $status StatusMsg */
+        $status = $socket->recvMsg(StatusMsg::class);
+
+        return $status->getCode();
+    }
 }

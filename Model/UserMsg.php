@@ -39,6 +39,7 @@ class UserMsg extends AbstractMsg
     private $connected_at;
     private $paid_at;
     private $valid_till;
+    private $tariff_id;
     private $created_at;
     private $updated_at;
 
@@ -234,6 +235,18 @@ class UserMsg extends AbstractMsg
         return $this;
     }
 
+    public function getTariffId()
+    {
+        return $this->tariff_id;
+    }
+
+    public function setTariffId($tariffId)
+    {
+        $this->tariff_id = $tariffId;
+
+        return $this;
+    }
+
     public function getCreatedAt()
     {
         return $this->created_at;
@@ -262,7 +275,8 @@ class UserMsg extends AbstractMsg
                 pack('i', $this->getConnectedAt()).
                 pack('i', $this->getPaidAt()).
                 pack('i', $this->getValidTill()).
-		pack('i', 0).pack('i', 0).pack('i', 0).pack('i', 0). pack('i', 0).
+                pack('i', $this->getTariffId()).
+                pack('i', 0).pack('i', 0).pack('i', 0).pack('i', 0).
                 pack('i', $this->getCreatedAt()).
                 pack('i', $this->getUpdatedAt())
         ;
@@ -273,7 +287,7 @@ class UserMsg extends AbstractMsg
         $data = unpack('ilogin/igroup/a16password/ienabled/a128name'
                 .'/a32country/a32city/a32phone/a32email/a32office'
                 .'/a32extra1/a32extra2/ilast_ip/iconnected_at/ipaid_at'
-                .'/ivalid_till/i5reserved/icreated_at/iupdated_at', $bytes);
+                .'/ivalid_till/itariff_id/i4reserved/icreated_at/iupdated_at', $bytes);
 
         $this->setLogin($data['login']);
         $this->setGroup($data['group']);
@@ -291,6 +305,7 @@ class UserMsg extends AbstractMsg
         $this->setConnectedAt($data['connected_at']);
         $this->setPaidAt($data['paid_at']);
         $this->setValidTill($data['valid_till']);
+        $this->setTariffId($data['tariff_id']);
         //---
         $this->created_at = $data['created_at'];
         $this->updated_at = $data['updated_at'];

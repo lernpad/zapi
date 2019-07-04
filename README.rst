@@ -77,16 +77,21 @@ Change User password
     $status = $cp->userPassword($login, "foobar");
     echo "password status(".$status.",".StatusMsg::getName($status).")\n";
 
-Change User service [deprecated]
+Change User service
 
 .. code-block:: php
 
     $status = $cp->userService($login, new \DateTime('+3 month'));
     echo "service status(".$status.",".StatusMsg::getName($status).")\n";
 
-Change User Tariff
+Get version of application
 
 .. code-block:: php
 
-    $status = $cp->userTariff($login, $tariffId, new \DateTime('+3 month'));
-    echo "tariff status(".$status.",".StatusMsg::getName($status).")\n";
+    $appId = 1;
+    $result = $cp->versionGet($appId);
+    $code = $result['status']->getCode();
+    $ver = $result['version'];
+    echo "service status(".$code.",".StatusMsg::getName($code).")\n";
+    /* @var $ver VersionMsg */
+    echo "version " . $ver->getMajor() . '.' . $ver->getMinor() . '.' . $ver->getPatch() . " URL: " . $ver->getLink() . "\n";

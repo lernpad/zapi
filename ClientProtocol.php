@@ -8,6 +8,7 @@ use Lernpad\ZApi\Model\MethodMsg;
 use Lernpad\ZApi\Model\NumberMsg;
 use Lernpad\ZApi\Model\StatusMsg;
 use Lernpad\ZApi\Model\UserMsg;
+use Lernpad\ZApi\Model\VersionMsg;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
 class ClientProtocol
@@ -161,7 +162,7 @@ class ClientProtocol
 
         /* @var $status StatusMsg */
         $status = $socket->recvMsg(StatusMsg::class);
-        /* @var $tmp UserMsg */
+        /* @var $user UserMsg */
         $user = $socket->recvMsg(UserMsg::class);
 
         return $status->getCode();
@@ -228,5 +229,28 @@ class ClientProtocol
         $status = $socket->recvMsg(StatusMsg::class);
 
         return $status->getCode();
+    }
+
+    public function versionGet($productId)
+    {
+        $socket = new Socket(\ZMQ::SOCKET_REQ, $this->timeout);
+        $socket->connect($this->host, $this->port);
+
+        $socket->sendMsg(new MethodMsg(MethodMsg::Version), \ZMQ::MODE_SNDMORE);
+
+        $productMsg = new NumberMsg();
+        $productMsg->setNumber($productId);
+        $socket->sendMsg($productMsg);
+
+        /* @var $status StatusMsg */
+        $status = $socket->recvMsg(StatusMsg::class);
+
+        /* @var $version VersionMsg */
+        $version = $socket->recvMsg(VersionMsg::class);
+
+        return [
+            'status' => $status,
+            'version' => $version,
+        ];
     }
 }

@@ -10,6 +10,7 @@ class MethodMsg extends CodeMsg
     const UserService = 29;
     const UserGet = 30;
     const EventsWebCalendar = 36;
+    const Version = 37;
     const UserTariff = 42;
 
     private static $methods = [
@@ -19,6 +20,7 @@ class MethodMsg extends CodeMsg
         self::UserService => 'UserService',
         self::UserGet => 'UserGet',
         self::EventsWebCalendar => 'EventsWebCalendar',
+        self::Version => 'Version',
         self::UserTariff => 'UserTariff',
     ];
 
